@@ -18,6 +18,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium import webdriver
 
 
 link = 'http://agmarknet.gov.in/PriceTrends/SA_Pri_Month.aspx'
@@ -32,7 +33,8 @@ commodities = soup.find_all('select',id='cphBody_Commodity_list')
 
 hh = webdriver.ChromeOptions() 
 hh.add_argument("--start-maximized")
-driver = webdriver.Chrome(chrome_options=hh)
+driver = webdriver.Chrome("/Users/swapna/SWPlayArea/Web_Crawler/chromedriver")
+#driver = webdriver.Chrome(chrome_options=hh)
 driver.get(link) #opening the link in the driver .
 path = '//select[@id="cphBody_Commodity_list"]'
 commodity_element = driver.find_element_by_xpath(path)
@@ -119,7 +121,7 @@ def select_month_option(value,dowait=True) :
 
 
 def rename(commodity,year,month) :
-    os.rename('C:/Users/5558/Downloads/Agmarknet_State_wise_Wholesale_Prices_Monthly_Analysis.xls','C:/Users/5558/Downloads/%s_%s_%s.xls'%(commodity,year,month))
+    os.rename('/Users/swapna/Downloads/Agmarknet_State_wise_Wholesale_Prices_Monthly_Analysis.xls','/Users/swapna/Downloads/%s_%s_%s.xls'%(commodity,year,month))
 
 def submit_download(values,year,month) :
     select_month_option(month)
@@ -147,7 +149,7 @@ for values in commodity_values :
             months = select_year_option(year)
             month_values =  [ '%s' % o.get_attribute('value') for o in months.options[1:] ]
             for month in month_values :
-                if os.path.exists('C:/Users/5558/Downloads/%s_%s_%s.xls'%(values,year,month)):
+                if os.path.exists('/Users/swapna/Downloads/%s_%s_%s.xls'%(values,year,month)):
                     continue
                 w=w+1
                 if w!=1 :
@@ -159,7 +161,8 @@ for values in commodity_values :
                 k=k+1
                 hh = webdriver.ChromeOptions() 
                 hh.add_argument("--start-maximized")
-                driver = webdriver.Chrome(chrome_options=hh)
+                driver = webdriver.Chrome("/Users/swapna/SWPlayArea/Web_Crawler/chromedriver")
+                # driver = webdriver.Chrome(chrome_options=hh)
                 driver.get(link) #opening the link in the driver .
                 path = '//select[@id="cphBody_Commodity_list"]'
                 commodity_element = driver.find_element_by_xpath(path)
